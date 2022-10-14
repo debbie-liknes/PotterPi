@@ -3,6 +3,7 @@ import joblib
 from Loader import DataLoader
 import cv2
 import numpy as np
+import definitions
 
 
 class Svm:
@@ -22,7 +23,7 @@ class Svm:
 
     def LoadSVMData(self):
         try:
-            return joblib.load('../Data/svm.pkl')
+            return joblib.load(definitions.SVM_DATA_FILE)
         except:
             return None
 
@@ -39,14 +40,13 @@ class Svm:
                 labels.append(int(spellId))
 
         self.svm.fit(features, labels)
-        joblib.dump(self.svm, '../Data/svm.pkl')
+        joblib.dump(self.svm, definitions.SVM_DATA_FILE)
 
     def Predict(self, image):
         resized = cv2.resize(image, (64, 64), interpolation=cv2.INTER_AREA)
         descriptors = self.hog.compute(resized)
         res = self.svm.predict_proba([descriptors])
         probabilities = res[0]
-        print(res)
         index = np.argmax(probabilities)
         maxProb = probabilities[index]
         return maxProb, index

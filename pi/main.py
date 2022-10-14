@@ -18,10 +18,12 @@ def run():
         image = im.Preprocess(image)
         trace = detector.TraceWand(image)
         if len(detector.WandPoints) > 15:
-            # TODO: check if trace is recognized spell
-            pass
+            resized = im.SquareCropToSymbol(trace, detector.WandPoints)
+            spell = matcher.RecognizeSpell(resized)
+            if spell is not None:
+                cv2.imwrite("trace.jpg", trace)
+                spell.Cast()
 
 
-test_image = cam.CaptureImage()
 detector.Reset(cam.frameHeight, cam.frameWidth)
 run()

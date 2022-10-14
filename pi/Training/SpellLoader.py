@@ -3,6 +3,7 @@ from Loader import DataLoader
 from Spell import Spell
 import cv2
 import os
+import definitions
 
 
 class SpellLoader:
@@ -13,7 +14,7 @@ class SpellLoader:
         self.Loader = DataLoader
 
     def Load(self):
-        with open("../Data/spellsData.yml", "r") as stream:
+        with open(definitions.SPELL_DATA_FILE, "r") as stream:
             try:
                 doc = yaml.load(stream, self.Loader)
                 if doc is not None:
@@ -54,7 +55,7 @@ class SpellLoader:
 
     def AddTrainingImage(self, image, spell):
         newFile = self.GenerateTrainingFileName(spell.spellId)
-        path = "../Data/Images/" + newFile
+        path = definitions.IMAGE_DIR + "\\" + newFile
         cv2.imwrite(path, image)
         if self.paths.get(spell.spellId) is not None:
             self.paths[spell.spellId].append(path)
@@ -63,5 +64,5 @@ class SpellLoader:
 
     def Save(self):
         spellDict = {"spells": self.spells, "paths": self.paths, "nextId": self.nextId}
-        with open("../Data/spellsData.yml", 'w') as outfile:
+        with open(definitions.SPELL_DATA_FILE, 'w') as outfile:
             yaml.dump(spellDict, outfile, default_flow_style=False)
