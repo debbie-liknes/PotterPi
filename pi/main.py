@@ -1,20 +1,27 @@
-from Camera import *
+from Cameras.TestVideo import *
 from WandDetector import *
+from SpellMatch import *
+import ImageProcessor as im
+
 
 cam = Camera()
 detector = WandDetector()
-numFrames = 0
-detector.Reset(FRAME_HEIGHT, FRAME_WIDTH)
+matcher = SpellMatch()
 
 
-while True:
-    image = cam.CaptureImage()
-    trace = detector.TraceWand(image)
-    if trace is not None:
-        # TODO: check if image is a recognized spell
-        # Collect frames and save result for now
-        numFrames += 1
-        if numFrames >= 100:
-            cv2.imwrite("trace.jpg", trace)
-            numFrames = 0
-            detector.Reset(FRAME_HEIGHT, FRAME_WIDTH)
+def run():
+    while True:
+        image = cam.CaptureImage()
+        if image is None:
+            # Something went wrong
+            break
+        image = im.Preprocess(image)
+        trace = detector.TraceWand(image)
+        if len(detector.WandPoints) > 15:
+            # TODO: check if trace is recognized spell
+            pass
+
+
+test_image = cam.CaptureImage()
+detector.Reset(cam.frameHeight, cam.frameWidth)
+run()
