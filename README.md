@@ -10,8 +10,13 @@ Take home the magic of the wizarding world of Harry Potter!
 4. IR pass filter (optional)
    - This isn't strictly necessary, but it will increase accuracy by filtering out a lot of visible light. You can buy filters on Amazon, but you can also use unexposed, developed film as a DIY IR pass filter.
    
+## Libraries
+1. OpenCV
+2. Scikit-learn
+3. Numpy
+   
 ## TODO
 - [x] Python code to make a trace of wand tip
-- [ ] Training mode to make library of symbols
+- [x] Training mode to make library of symbols
 - [ ] Recognize spells
 - [ ] Trigger Smart Home Events
