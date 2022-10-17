@@ -18,5 +18,5 @@ Take home the magic of the wizarding world of Harry Potter!
 ## TODO
 - [x] Python code to make a trace of wand tip
 - [x] Training mode to make library of symbols
-- [ ] Recognize spells
+- [x] Recognize spells
 - [ ] Trigger Smart Home Events
